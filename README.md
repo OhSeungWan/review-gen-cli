@@ -5,7 +5,7 @@
 ## 📦 설치 방법
 
 ```bash
-npm install git+https://github.com/your-org/review-gen-cli.git
+npm install git+https://github.com/OhSeungWan/review-gen-cli.git
 ```
 
 ## 🚀 사용 방법
