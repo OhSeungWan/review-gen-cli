@@ -11,7 +11,7 @@ npm install git+https://github.com/OhSeungWan/review-gen-cli.git
 ## 🚀 사용 방법
 
 ```bash
-npx review-gen --input ./reviews.csv --output ./output.csv --limit 10
+npx review-gen --input ./sample.csv --output ./result.csv --limit 10 --openai-key "sk-xxxx"  --prompt "당신은 리뷰 요약 전문가로서 ..."
 ```
 
 ### 인자 설명
@@ -22,6 +22,18 @@ npx review-gen --input ./reviews.csv --output ./output.csv --limit 10
 | `--output`      | 출력 CSV 파일 경로        | `./output.csv` |
 | `--limit`       | 최대 처리 건수            | `100`          |
 | `--concurrency` | 동시에 처리할 작업 개수   | `3`            |
+| `--openai-key`  | OpenAI API Key | .env 사용 |
+| `--prompt` | 커스텀 프롬프트 | 기본 프롬프트 |
+
+### 예시
+```bash
+npx review-gen \
+  --input ./reviews.csv \
+  --output ./output.csv \
+  --limit 10 \
+  --openai-key "sk-xxxx" \
+  --prompt "당신은 리뷰 요약 전문가로서 ..."
+```
 
 ## 📝 입력 CSV 예시
 
