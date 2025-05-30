@@ -9,13 +9,20 @@ import dotenv from "dotenv";
 import { runWithConcurrency } from "./utils";
 dotenv.config();
 
-const model = new ChatOpenAI({ model: "gpt-4o", temperature: 0 });
-
 export async function processCsv(
   inputPath: string,
   outputPath: string,
-  limit: number
+  limit: number,
+  concurrency: number,
+  openaiKey: string,
+  promptOverride: string
 ) {
+  const model = new ChatOpenAI({
+    model: "gpt-4o",
+    temperature: 0,
+    apiKey: openaiKey,
+  });
+
   const csvContent = fs.readFileSync(inputPath, "utf-8");
   const allRecords = parse(csvContent, { columns: true });
   const records = allRecords.slice(0, limit);
@@ -29,7 +36,7 @@ export async function processCsv(
         z.object({ keyword: z.string(), title: z.string() })
       )
       .invoke([
-        new SystemMessage({ content: "프롬프트 생략(기존 것 사용)" }),
+        new SystemMessage({ content: promptOverride }),
         new HumanMessage({ content: promptContext }),
       ]);
 

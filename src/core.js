@@ -22,9 +22,13 @@ const messages_1 = require("@langchain/core/messages");
 const dotenv_1 = __importDefault(require("dotenv"));
 const utils_1 = require("./utils");
 dotenv_1.default.config();
-const model = new openai_1.ChatOpenAI({ model: "gpt-4o", temperature: 0 });
-function processCsv(inputPath, outputPath, limit) {
+function processCsv(inputPath, outputPath, limit, concurrency, openaiKey, promptOverride) {
     return __awaiter(this, void 0, void 0, function* () {
+        const model = new openai_1.ChatOpenAI({
+            model: "gpt-4o",
+            temperature: 0,
+            apiKey: openaiKey,
+        });
         const csvContent = fs_1.default.readFileSync(inputPath, "utf-8");
         const allRecords = (0, sync_1.parse)(csvContent, { columns: true });
         const records = allRecords.slice(0, limit);
@@ -34,7 +38,7 @@ function processCsv(inputPath, outputPath, limit) {
             const agentResult = yield model
                 .withStructuredOutput(zod_1.default.object({ keyword: zod_1.default.string(), title: zod_1.default.string() }))
                 .invoke([
-                new messages_1.SystemMessage({ content: "프롬프트 생략(기존 것 사용)" }),
+                new messages_1.SystemMessage({ content: promptOverride }),
                 new messages_1.HumanMessage({ content: promptContext }),
             ]);
             return Object.assign(Object.assign({}, row), { "생성된 상품 키워드": agentResult.keyword, "생성된 리뷰 제목": agentResult.title });
