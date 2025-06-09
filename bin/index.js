@@ -20,10 +20,10 @@ program
     .parse(process.argv);
 const options = program.opts();
 const openaiKey = options.openaiKey || process.env.OPENAI_API_KEY;
-if (!options.prompt) {
-    console.error("❌ 프롬프트 문자열이 없습니다. --prompt 옵션을 확인해주세요.");
-    process.exit(1);
-}
+// if (!options.prompt) {
+//   console.error("❌ 프롬프트 문자열이 없습니다. --prompt 옵션을 확인해주세요.");
+//   process.exit(1);
+// }
 if (!openaiKey) {
     console.error("❌ OpenAI API Key가 없습니다. --openai-key 옵션이나 .env 파일을 확인하세요.");
     process.exit(1);
@@ -32,4 +32,8 @@ console.log(`📄 입력 파일: ${options.input}`);
 console.log(`💾 출력 파일: ${options.output}`);
 console.log(`🔢 처리 건수: 최대 ${options.limit}건`);
 console.log(`🚀 동시 처리: ${options.concurrency}개`);
-(0, core_1.processCsv)(path_1.default.resolve(options.input), path_1.default.resolve(options.output), parseInt(options.limit), parseInt(options.concurrency), openaiKey, options.prompt);
+(0, core_1.processCsv)(path_1.default.resolve(options.input), path_1.default.resolve(options.output), parseInt(options.limit), 
+// parseInt(options.concurrency),
+openaiKey
+// options.prompt
+);
