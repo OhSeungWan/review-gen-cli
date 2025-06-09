@@ -20,10 +20,10 @@ const options = program.opts();
 
 const openaiKey = options.openaiKey || process.env.OPENAI_API_KEY;
 
-if (!options.prompt) {
-  console.error("❌ 프롬프트 문자열이 없습니다. --prompt 옵션을 확인해주세요.");
-  process.exit(1);
-}
+// if (!options.prompt) {
+//   console.error("❌ 프롬프트 문자열이 없습니다. --prompt 옵션을 확인해주세요.");
+//   process.exit(1);
+// }
 if (!openaiKey) {
   console.error(
     "❌ OpenAI API Key가 없습니다. --openai-key 옵션이나 .env 파일을 확인하세요."
@@ -40,7 +40,7 @@ processCsv(
   path.resolve(options.input),
   path.resolve(options.output),
   parseInt(options.limit),
-  parseInt(options.concurrency),
-  openaiKey,
-  options.prompt
+  // parseInt(options.concurrency),
+  openaiKey
+  // options.prompt
 );
